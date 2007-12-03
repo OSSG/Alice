@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <component_connection>
+	<host>jabber.tests.ossg.ru</host>
+	<component>alice.jabber.tests.ossg.ru</component>
+	<secret>iengah4tahFokaih</secret>
+	<port>8887</port>
+	<tls>yes</tls>
+	<reconnect>yes</reconnect>
+    </component_connection>
+    <aliases>
+	<connection>
+	    <hostname>jabber.tests.ossg.ru</hostname>
+	    <domain>jabber.tests.ossg.ru</domain>
+	    <username>robot-blastaar</username>
+	    <password>blastaar</password>
+	    <port>5222</port>
+	    <tls>yes</tls>
+	    <resource>Alice</resource>
+	    <real_jid>robot-soaron@jabber.tests.ossg.ru</real_jid>
+	</connection>
+    </aliases>
+    <service>
+	<pid_file>/root/tmp/Alice/alice.pid</pid_file>
+	<error_log>/root/tmp/Alice/error_log</error_log>
+    </service>
+</config>
