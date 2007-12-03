@@ -101,7 +101,7 @@ do {
     $alice = new Net::Jabber::Component;
 
     $alice->SetCallBacks( message => \&_outgoing_message );
-    $alice->SetPresenceCallBacks( available => \&_outgoing_message );
+    $alice->SetPresenceCallBacks( available => \&_outgoing_message, unavailable => \&_outgoing_message );
 
     unless ( defined ($alice->Connect(	'hostname'		=> $config->{'component_connection'}->{'host'},
 					'port'			=> $config->{'component_connection'}->{'port'},
@@ -143,7 +143,7 @@ do {
 
 			$clients->[$i]->{'connection'} = new Net::Jabber::Client;
 			$clients->[$i]->{'connection'}->SetCallBacks( message => \&_incoming_message );
-			$clients->[$i]->{'connection'}->SetPresenceCallBacks( available => \&_incoming_message );
+			$clients->[$i]->{'connection'}->SetPresenceCallBacks( available => \&_incoming_message, unavailable => \&_incoming_message );
 
 			unless ( $clients->[$i]->{'connection'}->Connect(	'hostname'		=> $config->{'aliases'}->{'connection'}->[$i]->{'hostname'},
 										'port' 			=> $config->{'aliases'}->{'connection'}->[$i]->{'port'},
