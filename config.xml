@@ -17,6 +17,7 @@
 	    <port>5222</port>
 	    <tls>yes</tls>
 	    <resource>Alice</resource>
+	    <priority>1</priority>
 	    <real_jid>realjid1@somehost.somedomain</real_jid>
 	    <real_jid>realjid2@somehost.somedomain</real_jid>
 	</connection>
