@@ -20,7 +20,7 @@ Script requires this Perl-modules:
 ejabberd setup for using Alice
 ===============================
 
-In 'listen' section one have to add:
+In 'listen' section one should add:
 
 -------------------------------------------------------------------------------
 
