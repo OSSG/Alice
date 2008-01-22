@@ -238,7 +238,7 @@ sub _outgoing_message {
     my $error = 1;
     my $to = $message->GetTo();
     my $component = $config->{'component_connection'}->{'component'};
-# вычленяем из $to имя соединения и jid получателя
+# get connection name and rcpt jid from $to
     if ($to =~ m/^(.*)_for_(.*)\@$component$/) {
 	my $rcpt = $1;
 	my $sender = $2;
@@ -247,7 +247,7 @@ sub _outgoing_message {
 	}
 	my $connection_id = $connections_ids->{$sender};
 	if (defined $connection_id) {
-# проверяем соответствие $from и имени соединения
+# does $from corresponding connection name?
 	    foreach my $jid (@{$clients->[$connection_id]->{'jids'}}) {
 		if ($from eq $jid) {
 		    $message->SetFrom('');

@@ -1,0 +1,32 @@
+Alice
+======
+
+Script for creating aliases for an existing Jabber-accounts.
+
+Was developed and tested for using with ejabberd server.
+
+Named after the main character of two most famous novels of L. Carroll.
+
+System requirements
+====================
+
+List of Perl-modules script needs for normal operating:
+
+* Getopt::Long
+* Net::Jabber
+* POSIX
+* XML::Simple
+
+ejabberd setup for using Alice
+===============================
+
+In 'listen' section one have to add:
+
+-------------------------------------------------------------------------------
+
+% External Logger
+    {8887, ejabberd_service, [{ip, {127, 0, 0, 1}},
+			    {access, all},
+                            {hosts, ["alice.somehost.somedomain"], [{password, "0123456789abcdef"}]}]}
+
+-------------------------------------------------------------------------------
