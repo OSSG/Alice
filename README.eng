@@ -3,14 +3,14 @@ Alice
 
 Script for creating aliases for an existing Jabber-accounts.
 
-Was developed and tested for using with ejabberd server.
+Developed and tested for using with ejabberd server.
 
 Named after the main character of two most famous novels by L. Carroll.
 
 System requirements
 ====================
 
-List of Perl-modules script needs for normal operating:
+Script requires this Perl-modules:
 
 * Getopt::Long
 * Net::Jabber
