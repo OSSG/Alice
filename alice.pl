@@ -216,10 +216,11 @@ sub _incoming_message {
 
     if (defined $connection_id) {
 	my $from = $message->GetFrom();
-	$from =~ s~/.*$~~;
+	$from =~ s~(/.*)$~~;
+	my $resource = ($1 || '');
 	$from .= '_for_' . $to;
 	$from =~ s/\@/_at_/g;
-	$from .= '@' . $config->{'component_connection'}->{'component'};
+	$from .= '@' . $config->{'component_connection'}->{'component'} . $resource;
 	$message->SetFrom($from);
 	foreach my $jid (@{$clients->[$connection_id]->{'jids'}}) {
 	    $message->SetTo($jid);
@@ -239,8 +240,8 @@ sub _outgoing_message {
     my $to = $message->GetTo();
     my $component = $config->{'component_connection'}->{'component'};
 # get connection name and rcpt jid from $to
-    if ($to =~ m/^(.*)_for_(.*)\@$component$/) {
-	my $rcpt = $1;
+    if ($to =~ m/^(.*)_for_(.*)\@$component(\/.*)?$/) {
+	my $rcpt = $1 . ($3 || '');
 	my $sender = $2;
 	foreach ($rcpt, $sender) {
 	    s/_at_/\@/g;
