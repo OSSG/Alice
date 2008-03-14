@@ -86,7 +86,10 @@ for my $handle (*STDIN, *STDOUT) {
     }
 }
 
-_open_log();
+unless (open(*STDERR, '>>', $config->{'service'}->{'error_log'})) {
+    print STDERR "Can't reopen STDERR to $config->{'service'}->{'error_log'} : $!\n";
+    _disconnect();
+}
 
 unless (POSIX::setsid()) {
     print STDERR "Can't start a new session: $!\n";
@@ -96,7 +99,6 @@ unless (POSIX::setsid()) {
 
 $SIG{HUP} = $SIG{KILL} = $SIG{TERM} = $SIG{INT} = \&_disconnect;
 $SIG{PIPE} = 'IGNORE';
-$SIG{USR1} = \&_reopen_log;
 
 my $reconnect_flag = ($config->{'component_connection'}->{'reconnect'} &&
 		    ($config->{'component_connection'}->{'reconnect'} ne 'no')) ? 1 : 0;
@@ -271,16 +273,4 @@ sub _disconnect {
     $alice->Disconnect() if defined $alice;
     unlink($config->{'service'}->{'pid_file'}) if (-f $config->{'service'}->{'pid_file'});
     exit;
-}
-
-sub _reopen_log {
-    open(*STDERR, '+<', '/dev/null');
-    _open_log();
-}
-
-sub _open_log {
-    unless (open(*STDERR, '>>', $config->{'service'}->{'error_log'})) {
-	print STDERR "Can't reopen STDERR to $config->{'service'}->{'error_log'} : $!\n";
-	_disconnect();
-    }
 }
