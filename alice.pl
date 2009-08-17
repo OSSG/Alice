@@ -59,7 +59,23 @@ if ($@) {
 
 if (-f $config->{'service'}->{'pid_file'}) {
     print STDERR "Found pid file $config->{'service'}->{'pid_file'}. Alice already running?\n";
-    exit;
+    unless (open(IN, '<' . $config->{'service'}->{'pid_file'})) {
+	print STDERR "Can't check it out: pid file isn't readable: $!";
+	exit;
+    }
+    my $old_pid = <IN>;
+    close IN;
+    if (($old_pid =~ /^[0-9]{1,}$/) && kill(0, $old_pid)) {
+        print STDERR "Yes, Alice is already running with pid $old_pid\n";
+	exit;
+    }
+    else {
+	print STDERR "Alice not running. Deleting pid file of a dead process.\n";
+        unless (unlink $config->{'service'}->{'pid_file'}) {
+            print STDERR "Can't delete pid file of a dead process: $!\n";
+	    exit;
+        }
+    }
 }
 
 my $pid = fork();
@@ -169,7 +185,7 @@ do {
 										'tls' 			=> ($config->{'aliases'}->{'connection'}->[$i]->{'tls'} &&
 													    ($config->{'aliases'}->{'connection'}->[$i]->{'tls'} ne 'no')) ? 1 : 0 ) ) {
 			    my $error = $clients->[$i]->{'connection'}->GetErrorCode();
-			    print STDERR "Can't establish connection for " . ($i+1) . ' alias (' . $config->{'aliases'}->{'connection'}->[$i]->{'hostname'} . ':' . $config->{'aliases'}->{'connection'}->[$i]->{'port'} . '): ' . ((ref($error) eq 'HASH') ? $error->{'text'} : $error) . "\n";
+			    print STDERR "Can't establish connection for " . ($i+1) . ' alias (' . $config->{'aliases'}->{'connection'}->[$i]->{'username'} . '@' . $config->{'aliases'}->{'connection'}->[$i]->{'hostname'} . ':' . $config->{'aliases'}->{'connection'}->[$i]->{'port'} . '): ' . ((ref($error) eq 'HASH') ? $error->{'text'} : $error) . "\n";
 			    if ($first_time) {
 				$clients->[$i]->{'bad'} = 1;
 			    }
