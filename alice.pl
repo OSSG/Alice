@@ -267,7 +267,7 @@ sub _outgoing_message {
 # does $from corresponding connection name?
 	    foreach my $jid (@{$clients->[$connection_id]->{'jids'}}) {
 		if ($from eq $jid) {
-		    $message->SetFrom('');
+		    $message->SetFrom($sender);
 		    $message->SetTo($rcpt);
 		    $clients->[$connection_id]->{'connection'}->Send($message);
 		    $error = 0;
