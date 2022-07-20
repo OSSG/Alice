@@ -200,7 +200,7 @@ do {
 				print STDERR "Authorization for " . ($i+1) . ' alias (' . $config->{'aliases'}->{'connection'}->[$i]->{'username'} . '@' . ($config->{'aliases'}->{'connection'}->[$i]->{'domain'} || $config->{'aliases'}->{'connection'}->[$i]->{'hostname'}) . ") failed: $result[1]\n";
 			    }
 			    else {
-				$clients->[$i]->{'connection'}->PresenceSend(show => 'online', priority => ($config->{'aliases'}->{'connection'}->[$i]->{'priority'} && ($config->{'aliases'}->{'connection'}->[$i]->{'priority'} =~ /^[0-9]+$/)) ? $config->{'aliases'}->{'connection'}->[$i]->{'priority'} : DEFAULT_PRIORITY);
+				$clients->[$i]->{'connection'}->PresenceSend(type => 'available', priority => ($config->{'aliases'}->{'connection'}->[$i]->{'priority'} && ($config->{'aliases'}->{'connection'}->[$i]->{'priority'} =~ /^[0-9]+$/)) ? $config->{'aliases'}->{'connection'}->[$i]->{'priority'} : DEFAULT_PRIORITY);
 			    }
 			}
 		    }
