@@ -20,9 +20,15 @@ Script requires this Perl-modules:
 In `listen` section one should add:
 
 ```
-% External Logger
-    {8887, ejabberd_service, [{ip, {127, 0, 0, 1}},
-			    {access, all},
-                            {hosts, ["alice.somehost.somedomain"], [{password, "0123456789abcdef"}]}]}
+### External Logger
+  -
+    port: 8887
+    ip: "127.0.0.1"
+    access: all
+    module: ejabberd_service
+    hosts:
+      "alice.somehost.somedomain":
+        password: "0123456789abcdef"
+
 ```
 
